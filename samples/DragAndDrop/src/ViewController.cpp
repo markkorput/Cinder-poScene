@@ -1,5 +1,5 @@
 #include "ViewController.h"
-
+#include "DragAndDrop.h"
 #include "cinder/app/App.h"
 
 namespace sample {
@@ -22,7 +22,7 @@ namespace sample {
 			mDragAndDropVC->trackDropZoneView(dropZoneView);
 
 			ci::vec2 pos(ci::app::getWindowWidth() * 0.25, 75 + i * 75);
-			po::scene::DragAndDropViewRef dragView = po::scene::DragAndDropView::create(pos);
+			po::scene::DraggableViewRef dragView = po::scene::DraggableView::create(pos);
 			mDragAndDropVC->trackDragAndDropView(dragView);
 		}
 
@@ -30,7 +30,7 @@ namespace sample {
 			mDragAndDropVC->getView()->addChild(view);
 		}
 
-		for(auto &view : mDragAndDropVC->getDragAndDropViews()) {
+		for (auto &view : mDragAndDropVC->getDraggableViews()) {
 			mDragAndDropVC->getView()->addChild(view);
 		}
 
