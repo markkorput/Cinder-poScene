@@ -31,7 +31,6 @@
 #pragma once
 
 #include <deque>
-
 #include "View.h"
 
 namespace po { namespace scene {
