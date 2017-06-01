@@ -15,23 +15,23 @@ class Indicator
 public:
     static IndicatorRef create(std::string name, ci::Color color);
     virtual ~Indicator();
-    
+
     virtual void setup(std::string name, ci::Color color);
-    
+
     //	Show highlight
     void showHighlighted();
-    
+
 protected:
     Indicator();
-    
+
 private:
     //	Text box with event name
     TextBoxRef mTextBox;
-    
+
     //	Highlight shape
     ShapeRef mHighlight;
-    
+
     //	Highlight color
     ci::Color mColor;
-    
+
 };

@@ -1,3 +1,5 @@
+#include "cinder/app/App.h"
+
 #include "BoundsSample.h"
 #include "poShape.h"
 #include "poImage.h"
@@ -33,45 +35,45 @@ void BoundsSample::setup()
     .color(ci::Color(1, 1, 1))
     .alignment(ci::TextBox::Alignment::RIGHT)
     .font(ci::Font("Arial", 11));
-    
+
     // Scene BG
     mBG = Shape::createRect(1, 1);
     mBG->setFillColor(ci::Color(ci::CM_HSV, hue, saturation, brightness))
     .setParentShouldIgnoreInBounds(true);
     addChild(mBG);
-    
+
     // Scene text box + window text box
     mWindowTextBox = TextBox::create();
     mWindowTextBox->setPosition(-250, 0)
     .setParentShouldIgnoreInBounds(true);
     addChild(mWindowTextBox);
-    
+
     mTextBox = TextBox::create();
     mTextBox->setPosition(5, 5)
     .setParentShouldIgnoreInBounds(true);
     addChild(mTextBox);
-    
+
     // Node Container
     mNodeContainer = NodeContainer::create("Node Container");
     mNodeContainer->setPosition(100, 150)
     .setDrawBounds(true)
     .setBoundsColor(boundsColor)
     .setName("Node Container");
-    
+
     mNodeContainerBG = Shape::createRect(1, 1);
     mNodeContainerBG->setFillColor(ci::Color(ci::CM_HSV, nodeContainerHue, saturation, brightness))
     .setParentShouldIgnoreInBounds(true);
-    
+
     mNodeContainerTextBox = TextBox::create();
-    
+
     mNodeContainerTextBox->setPosition(5, 5)
     .setParentShouldIgnoreInBounds(true);
-    
+
     mNodeContainer->addChild(mNodeContainerBG)
     .addChild(mNodeContainerTextBox)
     .getSignal(MouseEvent::Type::DOWN_INSIDE).connect(std::bind(&BoundsSample::nodeMouseOver, this, std::placeholders::_1));
-    
-    
+
+
     // Add some shapes
     int yPos = 175;
     for(int i=0; i<3; i++) {
@@ -84,17 +86,17 @@ void BoundsSample::setup()
         .getSignal(MouseEvent::Type::DOWN_INSIDE).connect(std::bind(&BoundsSample::nodeMouseOver, this, std::placeholders::_1));
         mNodeContainer->addChild(s);
     }
-    
+
     addChild(mNodeContainer);
-    
+
     // Setup Scene (this class is the root node)
     setName("Scene (Scene Root Node)")
     .setPosition(ci::vec2(250, 50))
     .setDrawBounds(true)
     .setBoundsColor(boundsColor);
-    
+
     ci::app::getWindow()->getSignalKeyDown().connect(std::bind(&BoundsSample::keyPressed, this, std::placeholders::_1));
-    
+
 //    ShapeRef rect = Shape::createRect(400,400);
 //    setMask(rect);
 }
@@ -104,22 +106,22 @@ void BoundsSample::update()
     // Set the BGs
     mBG->setPosition(getBounds().getUpperLeft())
     .setScale(getSize());
-    
+
     mNodeContainerBG->setPosition(mNodeContainer->getBounds().getUpperLeft())
     .setScale(mNodeContainer->getSize());
-    
+
     // Update the scene and node container text
     mInfoText.setText(getNodeInfo(shared_from_this()));
     mTextBox->setCiTextBox(mInfoText);
-    
-    
+
+
     mInfoText.setText(getNodeInfo(mNodeContainer));
     mNodeContainerTextBox->setCiTextBox(mInfoText);
-    
+
     // Update window text
     std::stringstream ss;
     ss << "Window Mouse Position: " << ci::app::App::get()->getMousePos()-ci::app::getWindow()->getPos();
-    
+
     if(mSelectedNode) {
         ss << "\n\n" << getNodeInfo(mSelectedNode)
         << "\n---------------------------------"
@@ -129,11 +131,11 @@ void BoundsSample::update()
     } else {
         ss << "\n\n Click a node to select\nand view/change attributes...";
     }
-    
+
     mInfoText.text(ss.str())
     .alignment(ci::TextBox::Alignment::RIGHT);
     mWindowTextBox->setCiTextBox(mInfoText);
-    
+
     mInfoText.alignment(ci::TextBox::Alignment::LEFT);
 }
 
@@ -147,7 +149,7 @@ void BoundsSample::nodeMouseOver(po::scene::MouseEvent &event)
             mSelectedNode->setFillColor(ci::Color(ci::CM_HSV, nodeHue, saturation, brightness));
         }
     }
-    
+
     mSelectedNode = event.getSource();
     if(mSelectedNode == mNodeContainer) {
         mNodeContainerBG->setFillColor(ci::Color(ci::CM_HSV, nodeContainerHue, saturation, selectedBrightness));
@@ -160,7 +162,7 @@ void BoundsSample::keyPressed(ci::app::KeyEvent &key)
 {
     if(!mSelectedNode)
         return;
-    
+
     switch (key.getChar()) {
         case 'r':
             mSelectedNode->setRotation(mSelectedNode->getRotation() + M_PI / 4.0f);
@@ -171,19 +173,19 @@ void BoundsSample::keyPressed(ci::app::KeyEvent &key)
             if(curAlignment > static_cast<int>(po::scene::Alignment::NONE)) {
                 curAlignment = 0;
             }
-            
+
             mSelectedNode->setAlignment(static_cast<po::scene::Alignment>(curAlignment));
         }
-            
+
         case '+':
             mSelectedNode->setScale(mSelectedNode->getScale() + ci::vec2(scaleIncrease, scaleIncrease));
             break;
-        
+
         case '-':
             mSelectedNode->setScale(mSelectedNode->getScale() - ci::vec2(scaleIncrease, scaleIncrease));
             break;
-            
-            
+
+
         default:
             break;
     }
@@ -201,6 +203,6 @@ std::string BoundsSample::getNodeInfo(po::scene::NodeRef node)
     << "\nLocal Mouse Position: " << node->windowToLocal(ci::app::App::get()->getMousePos()-ci::app::getWindow()->getPos())
     << "\nBounds: " << node->getBounds()
     << "\nFrame: " << node->getFrame();
-    
+
     return ss.str();
 }
