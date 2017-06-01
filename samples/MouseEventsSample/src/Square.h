@@ -24,23 +24,23 @@ private:
 	//	Active state
 	ShapeRef mActive;
 	ci::Color mActiveColor;
-	
+
 	//	Selected state
 	ShapeRef mSelected;
 	ci::Color mSelectedColor;
-	
+
 	bool mIsMouseDown;
-	
+
 	//	Mouse events
 	void onMouseEvent(MouseEvent &event);
-	
+
 	//	Set selected state
 	void setSelected(bool isSelected);
-	
+
 	//	Rotate the square on mouse up inside
 	void doRotate();
-	
+
 	//	Reset rotation and mouse down
 	void reset();
-	
+
 };

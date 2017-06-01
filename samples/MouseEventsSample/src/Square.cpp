@@ -1,4 +1,5 @@
 #include "Square.h"
+#include "cinder/app/App.h"
 
 SquareRef Square::create()
 {
@@ -14,26 +15,26 @@ Square::Square()
 {
 }
 
-Square::~Square() 
+Square::~Square()
 {
 }
 
 void Square::setup()
 {
 	setAlignment(po::scene::Alignment::CENTER_CENTER);
-	
+
 	//	Create and add a shape for the active state
 	mActive = Shape::createRect(100, 100);
 	mActive->setFillColor(mActiveColor);
 	addChild(mActive);
-	
+
 	//	Create and add a shape for the selected state
 	//	Set the alpha to 0 so we can animate it
 	mSelected = Shape::createRect(100, 100);
 	mSelected->setFillColor(mSelectedColor);
 	addChild(mSelected);
 	mSelected->setAlpha(0.f);
-	
+
 	//	Connect to mouse events
 	getSignal(MouseEvent::DOWN_INSIDE).connect(std::bind(&Square::onMouseEvent, this, std::placeholders::_1));
 	getSignal(MouseEvent::UP_INSIDE).connect(std::bind(&Square::onMouseEvent, this, std::placeholders::_1));

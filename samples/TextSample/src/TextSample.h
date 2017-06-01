@@ -14,17 +14,17 @@ class TextSample
 {
 public:
     static TextSampleRef create();
-    
+
     void setup();
-    
+
 protected:
-	
+
 private:
 	TextSample();
-	
+
 	//	Scaling text box
 	TextBoxRef mScalingText;
-	
+
 	//	Scale text up and down in a loop
 	void animateScale();
 

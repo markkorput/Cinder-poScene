@@ -1,5 +1,5 @@
 #pragma once
-
+#include "cinder/app/App.h"
 #include "poNodeContainer.h"
 #include "poShape.h"
 #include "poImage.h"
@@ -14,22 +14,22 @@ class MaskingSample
 {
 public:
     static MaskingSampleRef create();
-    
+
     void setup();
-    
+
 protected:
 	MaskingSample();
 
 private:
 	//	Image
 	ImageRef mImage;
-	
+
 	//	Mask shape
 	ShapeRef mMask;
-	
+
 	//	Mouse event handlers
 	void onMouseMove(MouseEvent &event);
-	
+
 	void keyUp(ci::app::KeyEvent &event);
 
 };

@@ -12,12 +12,12 @@ class VideoSample
 {
 public:
     static VideoSampleRef create();
-    
+
     void setup();
-    
+
 protected:
     VideoSample();
-    
+
 private:
     po::scene::VideoGlRef       mVideo;
     void                        spinPlayer();

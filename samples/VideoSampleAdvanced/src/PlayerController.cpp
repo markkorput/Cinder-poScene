@@ -2,6 +2,8 @@
 #include "poShape.h"
 #include "cinder/ImageIo.h"
 #include "cinder/qtime/QuickTime.h"
+#include "cinder/app/App.h"
+
 using namespace po::scene;
 
 PlayerControllerRef PlayerController::create()
@@ -21,7 +23,7 @@ void PlayerController::setup()
     //  because will actually be playing thumbnails, don't need to add as a child,
     //  but still need a reference to the videos themselves
     mVideoReference = VideoGl::create();
-    
+
     //  create and add the buttons
     ci::gl::TextureRef playTex = ci::gl::Texture::create(ci::loadImage(ci::app::loadAsset("play.png")));
     ci::gl::TextureRef pauseTex = ci::gl::Texture::create(ci::loadImage(ci::app::loadAsset("pause.png")));
@@ -29,19 +31,19 @@ void PlayerController::setup()
     ShapeRef pauseShape = Shape::create(pauseTex);
     mPlayButton = PlayerButton::create(playShape);
     mPauseButton = PlayerButton::create(pauseShape);
-    
+
     //  the width of player (and movies) when playing will be 640px
     //  place buttons with that in mind
-    
+
     mPlayButton->setPosition((640 / 2) - 50 - mPlayButton->getWidth(), 0);
     mPauseButton->setPosition((640 / 2) + 50, 0);
-    
+
     addChild(mPlayButton);
     addChild(mPauseButton);
-    
+
     mPlayButton->getButtonSignal().connect(std::bind(&PlayerController::getPlaySignal, this));
     mPauseButton->getButtonSignal().connect(std::bind(&PlayerController::getPauseSignal, this));
-    
+
     //  create and add the scrubber
     mScrubber = Scrubber::create();
     mScrubber->getScrubberSignal().connect(std::bind(&PlayerController::getScrubberSignal, this, std::placeholders::_1));
@@ -52,7 +54,7 @@ void PlayerController::setup()
 void PlayerController::update()
 {
     NodeContainer::update();
-    
+
     //  if we don't have a movie reference, stop
     if (!mVideoReference->getMovieRef()) return;
 
@@ -64,7 +66,7 @@ void PlayerController::update()
         float currentTime = mVideoReference->getMovieRef()->getCurrentTime();
         float currentPct = currentTime / mCurrentDuration;
         mScrubber->setHandlePosition(currentPct);
-        
+
         if (mVideoReference->getMovieRef()->isDone()) {
             mVideoReference->getMovieRef()->stop();
             mVideoReference->getMovieRef()->seekToStart();
@@ -81,11 +83,11 @@ void PlayerController::setPrimaryMovie(po::scene::VideoGlRef video)
             mVideoReference->getMovieRef()->stop();
         }
     }
-    
+
     //  change the movie reference
     mVideoReference->setMovieRef(video->getMovieRef());
     mCurrentDuration = video->getMovieRef()->getDuration();
-    
+
     //  update scrubber
     float currentTime = mVideoReference->getMovieRef()->getCurrentTime();
     float currentPct = currentTime / mCurrentDuration;

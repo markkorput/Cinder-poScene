@@ -17,7 +17,7 @@ public:
 	virtual ~Indicator();
 
 	virtual void setup(std::string name);
-	
+
 	//	Show highlight
 	void showHighlighted();
 
@@ -27,11 +27,11 @@ protected:
 private:
 	//	Text box with event name
 	TextBoxRef mTextBox;
-	
+
 	//	Highlight shape
 	ShapeRef mHighlight;
-	
+
 	//	Highlight color
 	ci::Color mColor;
-	
+
 };

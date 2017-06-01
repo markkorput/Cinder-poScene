@@ -24,11 +24,11 @@ protected:
 private:
 	//	Reference to ci textbox
 	ci::TextBox mCiTextBox;
-	
+
 	//	Reference to the textbox node
 	TextBoxRef mTextBox;
-	
+
 	//	Get the placeholder text
 	std::string generateText();
- 
+
 };

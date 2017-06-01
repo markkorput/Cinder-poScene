@@ -14,18 +14,18 @@ class TextSampleAdvanced
 {
 public:
     static TextSampleAdvancedRef create();
-    
+
     void setup();
-    
+
 protected:
 	TextSampleAdvanced();
-	
+
 	void update();
 
 private:
 	//	Reference to the text component
 	TextComponentRef mTextComponent;
-	
+
 	//	Reference to the scroller
 	ScrollerRef mScroller;
 

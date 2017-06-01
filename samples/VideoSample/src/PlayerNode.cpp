@@ -1,4 +1,5 @@
 #include "PlayerNode.h"
+#include "cinder/app/App.h"
 
 using namespace po::scene;
 
@@ -18,7 +19,7 @@ void PlayerNode::setup()
     //ci::fs::path moviePath = ci::app::getAssetPath("phoebe.mp4");
 	ci::fs::path moviePath = ci::app::getAssetPath("test.mp4");
 	mVideoDisplayer = VideoGl::create();
-    
+
     try {
         ci::qtime::MovieGlRef movieRef;
         movieRef = ci::qtime::MovieGl::create(moviePath);
@@ -37,13 +38,13 @@ void PlayerNode::setup()
 void PlayerNode::update()
 {
     NodeContainer::update();
-    
+
 	if (!mVideoDisplayer->getMovieRef())
 	{
 		ci::app::console() << "PlayerNode::Failed to get movie ref" << std::endl;
 		return;
 	}
-	
+
     //  when movie finishes, stop and go back to the beginning
     if (mVideoDisplayer->getMovieRef()->isPlaying()) {
         if (mVideoDisplayer->getMovieRef()->isDone()) {
