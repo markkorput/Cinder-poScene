@@ -1,5 +1,6 @@
 #pragma once
 
+#include "cinder/app/App.h"
 #include "poNodeContainer.h"
 #include "poShape.h"
 #include "poTextBox.h"
@@ -16,27 +17,27 @@ class AlignmentSample
 {
 public:
     static AlignmentSampleRef create();
-    
+
     void setup();
-    
+
 protected:
-	
+
 private:
     po::scene::ShapeRef     mShapeNode;
     po::scene::TextBoxRef   mTextBottom;
-    
+
     //  Container to hold the indicators
     po::scene::NodeContainerRef             mIndicatorContainer;
-    
+
     //  Alignment types mapped to indicators
     std::vector<std::string>                mIndicatorNames;
     std::map<std::string, IndicatorRef>     mIndicators;
-    
+
 
     void keyDown(ci::app::KeyEvent &event);
-    
+
     void createIndicators();
     void activateIndicator(int num);
 
-    
+
 };
