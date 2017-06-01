@@ -1,3 +1,4 @@
+#include "cinder/app/App.h"
 #include "AnimationSquare.h"
 #include "poShape.h"
 
@@ -23,17 +24,17 @@ void AnimationSquare::setup(std::string name, ci::Color color)
     mIndicator = Indicator::create(name, color);
     mIndicator->setPosition(ci::vec2(0, 125));
     addChild(mIndicator);
-    
+
     //  add a signal to all mouse clicks to activate label
     getSignal(MouseEvent::DOWN_INSIDE).connect(std::bind(&AnimationSquare::showIndicator, this));
-    
+
 }
 
 void AnimationSquare::doPositionAnimation()
 {
     ci::vec2 topPos = ci::vec2(0.0f, - 100.f);
     ci::vec2 bottomPos = ci::vec2(0.0f, 100.f);
-    
+
     ci::app::timeline().apply(&mBaseShape->getPositionAnim(), topPos, 0.5);
     ci::app::timeline().appendTo(&mBaseShape->getPositionAnim(), bottomPos, 0.5);
     ci::app::timeline().appendTo(&mBaseShape->getPositionAnim(), ci::vec2(0.0f, 0.0f), 0.5);
@@ -69,7 +70,7 @@ void AnimationSquare::doColorAnimation()
 {
     ci::Color orange = ci::Color(255.f/255, 147.f/255, 30.f/255);
     ci::Color blue = ci::Color(63.f/255, 169.f/255, 245.f/255);
-    
+
     ci::app::timeline().apply(&mBaseShape->getFillColorAnim(), orange, 0.5);
     ci::app::timeline().appendTo(&mBaseShape->getFillColorAnim(), blue, 0.5);
     ci::app::timeline().appendTo(&mBaseShape->getFillColorAnim(), mBaseColor, 0.5);
