@@ -4,7 +4,7 @@ if( NOT TARGET poScene )
 
 	FILE(GLOB poScene_SOURCES ${poScene_SOURCE_PATH}/*.cpp)
 
-	add_library( poScene ${poScene_SOURCE_PATH}/poScene )
+	add_library( poScene ${poScene_SOURCES} )
 
 	target_include_directories( poScene PUBLIC "${poScene_SOURCE_PATH}" )
 	target_include_directories( poScene SYSTEM BEFORE PUBLIC "${CINDER_PATH}/include" )
